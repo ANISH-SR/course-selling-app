@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const {auth, JWT_SECRET} = require("./auth");
 const { z } = require("zod");
 const {UserModel} = require("./db");
+const {connect} = require("mongoose");
 
 const port = process.env.PORT || 3000;
 mongoose.connect("");
@@ -12,7 +13,7 @@ mongoose.connect("");
 const app = express();
 app.use(express.json());
 
-app.post("/signup", async (req,res)=>{
+app.post("/user/signup", async (req,res)=>{
     const required_body = z.object({
         email: z.string().email(
             {message: "Invalid email address."}
@@ -50,7 +51,7 @@ app.post("/signup", async (req,res)=>{
 
 })
 
-app.post("/login", async (req,res)=>{
+app.post("/user/signin", async (req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
 
@@ -81,11 +82,15 @@ app.post("/login", async (req,res)=>{
 
 })
 
-app.post(`/buy-course`, auth, async (req, res)=>{
+app.get("/course/preview", auth, async (req,res)=>{
 
 })
 
-app.post("/courses", auth, async (req,res)=>{
+app.get(`/user/purchases`, auth, async (req, res)=>{
+
+})
+
+app.post(`/course/purchase`, auth, async (req, res)=>{
 
 })
 
